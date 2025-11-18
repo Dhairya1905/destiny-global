@@ -282,7 +282,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+  console.log(`🚀 Server is running on port ${PORT}`);
   console.log(`📧 Email service configured`);
   console.log(`🌐 CORS enabled for development`);
   console.log(`📍 API endpoint: http://localhost:${PORT}/api/enquiry`);
