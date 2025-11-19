@@ -22,6 +22,10 @@ function App() {
   // Keep track of last-focused input to preserve focus if it gets stolen
   const lastFocusedRef = useRef(null);
 
+  // Gallery / Lightbox state
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [galleryOpen, setGalleryOpen] = useState(false);
+
   // Focus-preserve effect: if active element becomes body/null, try to refocus lastFocusedRef
   useEffect(() => {
     const restoreFocus = () => {
@@ -42,6 +46,30 @@ function App() {
       window.removeEventListener('keydown', restoreFocus);
     };
   }, []);
+
+  useEffect(() => {
+    const titles = {
+      home: 'Destiny Global Import Export - Organic Cow Dung Products Exporter',
+      about: 'About Us - Destiny Global Import Export | Sustainable Solutions',
+      products: 'Our Products - Organic Pellets, Compost & Powder | Destiny Global',
+      contact: 'Contact Us - Destiny Global Import Export',
+      'product-detail': selectedProduct ? `${selectedProduct.name} - Destiny Global` : 'Product Details'
+    };
+    
+    document.title = titles[currentPage] || 'Destiny Global Import Export';
+    
+    const descriptions = {
+      home: 'Leading exporter of premium organic cow dung pellets, compost, and powder from India. Sustainable biomass energy and organic fertilizers.',
+      products: 'Browse our range of organic cow dung products: pellets for biomass energy, compost for organic farming, and powder for soil enrichment.',
+      about: 'Learn about Destiny Global Import Export - pioneers in sustainable agricultural exports from India to the world.',
+      contact: 'Get in touch with Destiny Global Import Export for bulk orders, inquiries, and partnerships.'
+    };
+    
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && descriptions[currentPage]) {
+      metaDesc.setAttribute('content', descriptions[currentPage]);
+    }
+  }, [currentPage, selectedProduct]);
 
   const products = [
     {
@@ -81,7 +109,7 @@ function App() {
       id: 'compost',
       name: 'Cow Dung Compost',
       category: 'Organic Farming',
-      shortDesc: 'Natural soil conditioner for sustainable agriculture',
+      shortDesc: 'Eco-friendly soil for lasting crops',
       description: 'Our fully decomposed cow dung compost is a natural soil conditioner that enhances soil fertility and promotes healthy plant growth.',
       image: '/Compost1.png',
       images: ['/Compost1.png', '/Compost2.png', '/Compost3.png', '/Compost4.png'],
@@ -110,8 +138,6 @@ function App() {
         'C:N Ratio': '15:1 to 20:1'
       }
     },
-
-    // NEW: Cow Dung Powder
     {
       id: 'powder',
       name: 'Cow Dung Powder',
@@ -145,9 +171,74 @@ function App() {
         'pH Level': '6.5-7.2'
       }
     },
-
-    // NEW: Liquid Cow Dung Fertilizer (Slurry / Fermented)
-    
+    {
+      id: 'batti',
+      name: 'Sandalwood Cow Dung Incense Sticks (Batti)',
+      category: 'Spiritual & Wellness',
+      shortDesc: 'Sacred incense sticks for Pooja, Havan and relaxation',
+      description: 'Handcrafted cow dung incense sticks infused with pure sandalwood fragrance. Perfect for daily worship, meditation, havan ceremonies, and creating a peaceful atmosphere. Made from natural cow dung and aromatic herbs.',
+      image: '/Batti1.png',
+      images: ['/Batti1.png', '/Batti2.png', '/Batti3.png', '/Batti4.png'],
+      features: [
+        'Infused with premium sandalwood fragrance',
+        'Made from pure, organic cow dung',
+        'Long-lasting aroma for spiritual ambiance',
+        'Smoke-free and non-toxic burning',
+        'Ideal for daily pooja rituals and meditation',
+        'Creates calming and purifying atmosphere'
+      ],
+      applications: [
+        'Daily Pooja and Prayer Rituals',
+        'Havan and Religious Ceremonies',
+        'Meditation and Yoga Sessions',
+        'Home Fragrance and Relaxation',
+        'Temple and Spiritual Gatherings',
+        'Stress Relief and Aromatherapy'
+      ],
+      specifications: {
+        'Stick Length': '20-25 cm',
+        'Burning Time': '45-60 minutes per stick',
+        'Fragrance': 'Sandalwood',
+        'Weight per Stick': '8-10 grams',
+        'Base Material': '100% Organic Cow Dung',
+        'Packaging': 'Box of 20/50/100 sticks',
+        'Shelf Life': '2 years'
+      }
+    },
+    {
+      id: 'cake',
+      name: 'Traditional Cow Dung Cakes',
+      category: 'Spiritual & Traditional',
+      shortDesc: 'Sacred cakes for Pooja, Havan and auspicious occasions',
+      description: 'Pure, hand-molded cow dung cakes perfect for religious ceremonies, weddings, and indoor havan. These traditional cakes are eco-friendly, smokeless when properly burned, and considered highly auspicious in Hindu rituals.',
+      image: '/Cake1.png',
+      images: ['/Cake1.png', '/Cake2.png', '/Cake3.png', '/Cake4.png'],
+      features: [
+        'Handcrafted from pure cow dung',
+        'Ideal for auspicious occasions like marriages',
+        'Suitable for indoor havan ceremonies',
+        'Smokeless and low-ash burning',
+        'Traditional and eco-friendly fuel',
+        'Creates sacred and purifying atmosphere'
+      ],
+      applications: [
+        'Wedding Ceremonies and Rituals',
+        'Indoor Havan and Yagna',
+        'Festival Celebrations (Diwali, Holi)',
+        'Griha Pravesh (House Warming)',
+        'Daily Pooja and Religious Functions',
+        'Traditional Cooking in Rural Areas'
+      ],
+      specifications: {
+        'Diameter': '10-15 cm',
+        'Thickness': '2-3 cm',
+        'Weight per Cake': '200-300 grams',
+        'Moisture Content': '8-12%',
+        'Burning Time': '60-90 minutes per cake',
+        'Packaging': 'Pack of 10/25/50 cakes',
+        'Shelf Life': '1-2 years (when stored properly)'
+      }
+    }
   ];
 
   // Generic submit handler that reads values from an uncontrolled form (formRef)
@@ -207,12 +298,6 @@ function App() {
     lastFocusedRef.current = e.target;
   };
 
-  /* -------------------------
-     Gallery / Lightbox state
-     ------------------------- */
-  const [galleryIndex, setGalleryIndex] = useState(0);
-  const [galleryOpen, setGalleryOpen] = useState(false);
-
   // Open modal with a specific index
   const openGalleryAt = (index) => {
     setGalleryIndex(index);
@@ -229,14 +314,14 @@ function App() {
     setGalleryIndex(i => (i + 1) % selectedProduct.images.length);
   };
 
-  // Auto-advance every 4s while modal open
+  // Auto-advance every 5s while modal open
   useEffect(() => {
     if (!galleryOpen) return;
     const id = setInterval(() => {
       galleryNext();
     }, 4000);
     return () => clearInterval(id);
-  }, [galleryOpen, selectedProduct]);
+  }, [galleryOpen, selectedProduct, galleryIndex]);
 
   // Keyboard support
   useEffect(() => {
@@ -248,7 +333,7 @@ function App() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [galleryOpen, selectedProduct]);
+  }, [galleryOpen, selectedProduct, galleryIndex]);
 
   const Header = () => (
     <header className="header">
@@ -287,13 +372,13 @@ function App() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-col">
-            <div className="footer-logo">
-              <Globe className="logo-icon" />
-              <div>
-                <h3>DESTINY GLOBAL</h3>
-                <p>Import Export</p>
-              </div>
+          <div className="footer-logo" onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ cursor: 'pointer' }}>
+            <img src="/logo.png" alt="Destiny Global" className="logo-img" style={{ width: '50px', height: '50px' }} />
+            <div>
+              <h3>DESTINY GLOBAL</h3>
+              <p>Import Export</p>
             </div>
+          </div>
             <p className="footer-desc">Pioneering sustainable export solutions from India to the world</p>
           </div>
 
@@ -469,8 +554,7 @@ function App() {
                   key={idx}
                   src={img}
                   alt={`${selectedProduct.name} ${idx + 1}`}
-                  onClick={() => { setGalleryIndex(idx); setGalleryOpen(true); }}
-                  className={idx === galleryIndex ? 'active-thumb' : ''}
+                  onClick={() => openGalleryAt(idx)}
                 />
               ))}
             </div>
@@ -643,27 +727,27 @@ function App() {
                 <input type="text" name="product" placeholder="Product Interest" onFocus={onInputFocus} />
                 <textarea name="message" placeholder="Your Message *" required rows="4" onFocus={onInputFocus} />
                 <button type="submit" className="btn-submit" disabled={formLoading}>
-                  {formLoading ? 'Sending...' : 'Send Message'} <ArrowRight />
+                  {formLoading ? 'Submitting...' : 'Send Message'} <ArrowRight />
                 </button>
-              </form>
+                </form>
             )}
-          </div>
+            </div>
         </div>
-      </div>
+        </div>
     </div>
-  );
-
-  return (
+    );
+    return (
     <div className="App">
       <Header />
+
       {currentPage === 'home' && <HomePage />}
       {currentPage === 'about' && <AboutPage />}
       {currentPage === 'products' && <ProductsPage />}
       {currentPage === 'product-detail' && <ProductDetailPage />}
       {currentPage === 'contact' && <ContactPage />}
+
       <Footer />
     </div>
-  );
+    );
 }
-
 export default App;
