@@ -180,7 +180,7 @@ function App() {
     setFormError(null);
 
     try {
-      const response = await fetch('http://localhost:5001/api/enquiry', {
+      const response = await fetch('/api/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(payload)
