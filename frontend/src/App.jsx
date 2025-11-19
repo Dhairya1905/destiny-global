@@ -1,7 +1,7 @@
 // src/App.js
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  Globe, Leaf, Ship, Package, Mail, Phone, CheckCircle,
+  Leaf, Ship, Package, Mail, Phone, CheckCircle,
   ArrowRight, Menu, X, MessageCircle
 } from 'lucide-react';
 import './App.css';
@@ -427,7 +427,7 @@ function App() {
       <section className="hero">
         <div className="hero-bg"></div>
         <div className="hero-content">
-          <Globe className="hero-icon" />
+          <img src="/logo.png" alt="Destiny Global Logo" className="hero-logo" />
           <h1>DESTINY GLOBAL</h1>
           <p className="hero-subtitle">Import Export</p>
           <p className="hero-desc">Connecting Markets, Delivering Excellence Worldwide</p>
