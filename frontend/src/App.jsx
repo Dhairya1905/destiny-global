@@ -368,7 +368,7 @@ function App() {
       <div className="container">
         <div className="header-content">
           <div className="logo" onClick={() => setCurrentPage('home')} role="button" tabIndex={0}>
-            <img src="/logo.png" alt="Destiny Global" className="logo-img" />
+            <img src="/logo.pngpng?v=2" alt="Destiny Global" className="logo-img" />
           </div>
 
           <nav className="nav-desktop">
