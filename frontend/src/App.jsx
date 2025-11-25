@@ -368,7 +368,7 @@ function App() {
       <div className="container">
         <div className="header-content">
           <div className="logo" onClick={() => setCurrentPage('home')} role="button" tabIndex={0}>
-            <img src="/logo.pngpng?v=2" alt="Destiny Global" className="logo-img" />
+            <img src="/logo.png?v=2" alt="Destiny Global" className="logo-img" />
           </div>
 
           <nav className="nav-desktop">
@@ -401,7 +401,7 @@ function App() {
         <div className="footer-grid">
           <div className="footer-col">
           <div className="footer-logo" onClick={() => { setCurrentPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ cursor: 'pointer' }}>
-            <img src="/logo.png" alt="Destiny Global" className="logo-img" style={{ width: '50px', height: '50px' }} />
+            <img src="/logo.png?v=2" alt="Destiny Global" className="logo-img" style={{ width: '50px', height: '50px' }} />
             <div>
               <h3>DESTINY GLOBAL</h3>
               <p>Import Export</p>
@@ -469,7 +469,7 @@ function App() {
 
         {/* Content on top */}
         <div className="hero-content-carousel">
-          <img src="/logo.png" alt="Destiny Global Logo" className="hero-logo-carousel" />
+          <img src="/logo.png?v=2" alt="Destiny Global Logo" className="hero-logo-carousel" />
           <h1 className="hero-title-carousel">DESTINY GLOBAL</h1>
           <p className="hero-subtitle-carousel">Import Export</p>
           <p className="hero-desc-carousel">Connecting Markets, Delivering Excellence Worldwide</p>
