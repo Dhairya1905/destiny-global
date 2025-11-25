@@ -1266,3 +1266,241 @@ body {
       height: 5rem;
     }
   }
+  /* Hero Carousel Section - ADD THESE STYLES */
+.hero-carousel {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.carousel-slides {
+  position: absolute;
+  inset: 0;
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 3.5s ease-in-out;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+.carousel-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(30, 64, 175, 0.5) 50%, rgba(0, 0, 0, 0.7) 100%);
+  z-index: 1;
+}
+
+.hero-content-carousel {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  padding: 2rem;
+}
+
+.hero-logo-carousel {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 10px 30px rgba(249, 115, 22, 0.6));
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+.hero-title-carousel {
+  font-size: 5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.05em;
+}
+
+.hero-subtitle-carousel {
+  font-size: 2.5rem;
+  color: #fb923c;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5);
+}
+
+.hero-desc-carousel {
+  font-size: 1.5rem;
+  color: #e5e7eb;
+  margin-bottom: 2.5rem;
+  max-width: 800px;
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero-buttons-carousel {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary-carousel {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s;
+  box-shadow: 0 10px 25px rgba(249, 115, 22, 0.4);
+}
+
+.btn-primary-carousel:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(249, 115, 22, 0.5);
+}
+
+.btn-secondary-carousel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  padding: 1rem 2.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-secondary-carousel:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: white;
+  transform: translateY(-3px);
+}
+
+/* Carousel Navigation */
+.carousel-nav {
+  display: none; /* Hide the arrows */
+}
+
+.carousel-nav:hover {
+  background: rgba(249, 115, 22, 0.95);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-prev {
+  left: 2rem;
+}
+
+.carousel-next {
+  right: 2rem;
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 20;
+}
+
+.indicator {
+  width: 3rem;
+  height: 0.5rem;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.indicator.active {
+  background: #f97316;
+  width: 4rem;
+}
+
+/* Responsive Carousel */
+@media (max-width: 768px) {
+  .hero-title-carousel {
+    font-size: 3rem;
+  }
+  
+  .hero-subtitle-carousel {
+    font-size: 1.75rem;
+  }
+  
+  .hero-desc-carousel {
+    font-size: 1.125rem;
+  }
+  
+  .hero-logo-carousel {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .carousel-nav {
+    width: 3rem;
+    height: 3rem;
+    font-size: 2rem;
+  }
+  
+  .carousel-prev {
+    left: 1rem;
+  }
+  
+  .carousel-next {
+    right: 1rem;
+  }
+  
+  .carousel-indicators {
+    bottom: 2rem;
+  }
+  
+  .indicator {
+    width: 2rem;
+    height: 0.4rem;
+  }
+  
+  .indicator.active {
+    width: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title-carousel {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle-carousel {
+    font-size: 1.25rem;
+  }
+  
+  .hero-desc-carousel {
+    font-size: 1rem;
+  }
+  
+  .btn-primary-carousel,
+  .btn-secondary-carousel {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}

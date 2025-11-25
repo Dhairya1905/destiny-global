@@ -1,8 +1,7 @@
-// src/App.js
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Leaf, Ship, Package, Mail, Phone, CheckCircle,
-  ArrowRight, Menu, X, MessageCircle
+  ArrowRight, Menu, X, MessageCircle, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import './App.css';
 
@@ -10,6 +9,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
@@ -25,6 +25,34 @@ function App() {
   // Gallery / Lightbox state
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [galleryOpen, setGalleryOpen] = useState(false);
+
+  // Port images for carousel
+  const portImages = [
+    '/port.png',
+    '/port1.png',
+    '/port2.png',
+    '/port3.png'
+  ];
+
+  // Auto-advance carousel every 4 seconds
+  useEffect(() => {
+    if (currentPage !== 'home') return;
+    
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % portImages.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [currentPage, portImages.length]);
+
+  // Manual navigation
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % portImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + portImages.length) % portImages.length);
+  };
 
   // Focus-preserve effect: if active element becomes body/null, try to refocus lastFocusedRef
   useEffect(() => {
@@ -424,21 +452,66 @@ function App() {
 
   const HomePage = () => (
     <div className="page">
-      <section className="hero">
-        <div className="hero-bg"></div>
-        <div className="hero-content">
-          <img src="/logo.png" alt="Destiny Global Logo" className="hero-logo" />
-          <h1>DESTINY GLOBAL</h1>
-          <p className="hero-subtitle">Import Export</p>
-          <p className="hero-desc">Connecting Markets, Delivering Excellence Worldwide</p>
-          <div className="hero-buttons">
-            <button type="button" onClick={() => setCurrentPage('products')} className="btn-primary">
+      <section className="hero-carousel">
+        {/* Carousel Background Images */}
+        <div className="carousel-slides">
+          {portImages.map((img, index) => (
+            <div
+              key={index}
+              className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
+              style={{ backgroundImage: `url(${img})` }}
+            />
+          ))}
+        </div>
+
+        {/* Dark Overlay */}
+        <div className="carousel-overlay" />
+
+        {/* Content on top */}
+        <div className="hero-content-carousel">
+          <img src="/logo.png" alt="Destiny Global Logo" className="hero-logo-carousel" />
+          <h1 className="hero-title-carousel">DESTINY GLOBAL</h1>
+          <p className="hero-subtitle-carousel">Import Export</p>
+          <p className="hero-desc-carousel">Connecting Markets, Delivering Excellence Worldwide</p>
+          <div className="hero-buttons-carousel">
+            <button type="button" onClick={() => setCurrentPage('products')} className="btn-primary-carousel">
               View Products <ArrowRight />
             </button>
-            <button type="button" onClick={() => setCurrentPage('contact')} className="btn-secondary">
+            <button type="button" onClick={() => setCurrentPage('contact')} className="btn-secondary-carousel">
               Contact Us
             </button>
           </div>
+        </div>
+
+        {/* Navigation Controls */}
+        <button 
+          type="button" 
+          className="carousel-nav carousel-prev" 
+          onClick={prevSlide}
+          aria-label="Previous slide"
+        >
+          <ChevronLeft />
+        </button>
+        <button 
+          type="button" 
+          className="carousel-nav carousel-next" 
+          onClick={nextSlide}
+          aria-label="Next slide"
+        >
+          <ChevronRight />
+        </button>
+
+        {/* Indicators */}
+        <div className="carousel-indicators">
+          {portImages.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              className={`indicator ${index === currentSlide ? 'active' : ''}`}
+              onClick={() => setCurrentSlide(index)}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
         </div>
       </section>
 
@@ -729,14 +802,15 @@ function App() {
                 <button type="submit" className="btn-submit" disabled={formLoading}>
                   {formLoading ? 'Submitting...' : 'Send Message'} <ArrowRight />
                 </button>
-                </form>
+              </form>
             )}
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-    );
-    return (
+  );
+
+  return (
     <div className="App">
       <Header />
 
@@ -748,6 +822,7 @@ function App() {
 
       <Footer />
     </div>
-    );
+  );
 }
+
 export default App;
